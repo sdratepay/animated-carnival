@@ -1,8 +1,4 @@
 type: reference-docs
-definitionId: ratepay
+definitionId: tracie_authorization
 settings:
-  generateCodeSamples:
-    languages:
-      - lang: curl
-      - lang: JavaScript
-      - lang: Node.js
+  label: Transaction Authorization
