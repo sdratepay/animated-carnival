@@ -1,8 +1,8 @@
 meta:
-  title: Redocly Training
-  description: The best API documentation generator ever.
-  siteUrl: https://portal-demo.redoc.ly
-  keywords: redocly developer portal, api portal starter, api reference docs
+  title: Ratepay API Specifications
+  description: The specifiations of Ratepays APIs for easy payment transactions.
+  siteUrl: https://ratepay.redoc.ly
+  keywords: Ratepay developer portal, Ratepay api portal, Ratepay api reference docs
 logo: ./images/logo.png
 enableToc: true
 oasDefinitions:
@@ -19,29 +19,29 @@ stylesheets:
 #  - ./static/intercom.js
 nav:
 
-  - label: Training exercises
+  - label: Ratepay APIs
     page: developer-portal/index.md
 
-  - label: External docs
-    icon: ./images/redocly-icon-white.png
-    href: https://docs.redoc.ly/developer-portal/introduction/
+#  - label: External docs
+#    icon: ./images/redocly-icon-white.png
+#    href: https://docs.redoc.ly/developer-portal/introduction/
 
   - search: true
 
-footer:
-  copyrightText: Copyright © Redocly 2019-2021. All right reserved.
-  columns:
-    - group: Legal
-      items:
-        - label: Terms of Use
-          href: 'https://redoc.ly/subscription-agreement/'
-        - label: Privacy Notice
-          href: 'https://redoc.ly/privacy-policy/'
-        - label: Cookie Notice
-          href: 'https://redoc.ly/privacy-policy/'
-    - group: Support
-      items:
-        - label: FAQ
-          page: faq.md
-        - label: Contact us
-          page: contact.mdx
+#footer:
+#  copyrightText: Copyright © Redocly 2019-2021. All right reserved.
+#  columns:
+#    - group: Legal
+#      items:
+#        - label: Terms of Use
+#          href: 'https://redoc.ly/subscription-agreement/'
+#        - label: Privacy Notice
+#          href: 'https://redoc.ly/privacy-policy/'
+#        - label: Cookie Notice
+#          href: 'https://redoc.ly/privacy-policy/'
+#    - group: Support
+#      items:
+#        - label: FAQ
+#          page: faq.md
+#        - label: Contact us
+#         page: contact.mdx
