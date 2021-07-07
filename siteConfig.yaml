@@ -4,7 +4,7 @@ meta:
   siteUrl: https://ratepay.redoc.ly
   keywords: Ratepay developer portal, Ratepay api portal, Ratepay api reference docs
 logo: ./images/logo.png
-enableToc: true
+enableToc: false
 oasDefinitions:
   tracie_authorization: ./openapi/tracie_authorization.yaml
   # add links to definitions in our API registry by using a fully qualified URL.
