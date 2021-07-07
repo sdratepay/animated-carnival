@@ -1,4 +1,5 @@
-training:
+ratepay:
+  - page: developer-portal/index.md
   - group: Transaction API
     expanded: true
     pages:
