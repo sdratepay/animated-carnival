@@ -19,14 +19,14 @@ stylesheets:
 #  - ./static/intercom.js
 nav:
 
-  - label: Ratepay APIs
-    page: developer-portal/index.md
+   - search: true
+
+#  - label: Ratepay APIs
+#    page: developer-portal/index.md
 
 #  - label: External docs
 #    icon: ./images/redocly-icon-white.png
 #    href: https://docs.redoc.ly/developer-portal/introduction/
-
-  - search: true
 
 footer:
   copyrightText: Copyright © Ratepay GmbH 2021. All right reserved.
