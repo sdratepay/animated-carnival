@@ -28,8 +28,8 @@ nav:
 
   - search: true
 
-#footer:
-#  copyrightText: Copyright © Redocly 2019-2021. All right reserved.
+footer:
+  copyrightText: Copyright © Ratepay GmbH 2021. All right reserved.
 #  columns:
 #    - group: Legal
 #      items:
