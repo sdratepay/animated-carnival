@@ -3,7 +3,7 @@ meta:
   description: The specifiations of Ratepays APIs for easy payment transactions.
   siteUrl: https://ratepay.redoc.ly
   keywords: Ratepay developer portal, Ratepay api portal, Ratepay api reference docs
-logo: ./images/logo.png
+logo: ./images/ratepay_logo_white.png
 enableToc: false
 oasDefinitions:
   tracie_authorization: ./openapi/tracie_authorization.yaml
