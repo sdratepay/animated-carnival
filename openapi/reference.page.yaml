@@ -1,6 +1,8 @@
 type: reference-docs
-definitionId: transactionapi
+definitionId: ratepay
 settings:
   generateCodeSamples:
     languages:
-      - lang: JSON
+      - lang: curl
+      - lang: JavaScript
+      - lang: Node.js
