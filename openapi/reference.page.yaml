@@ -1,8 +1,6 @@
 type: reference-docs
-definitionId: petstore
+definitionId: transactionapi
 settings:
   generateCodeSamples:
     languages:
-      - lang: curl
-      - lang: JavaScript
-      - lang: Node.js
+      - lang: JSON
