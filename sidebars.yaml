@@ -3,4 +3,4 @@ ratepay:
   - group: Transaction API
     expanded: true
     pages:
-      - page: openapi/tracie_authorization.page.yaml/*
+      - page: openapi/transaction_api.page.yaml/*
