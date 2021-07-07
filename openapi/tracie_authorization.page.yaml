@@ -2,3 +2,8 @@ type: reference-docs
 definitionId: tracie_authorization
 settings:
   label: Transaction Authorization
+  generateCodeSamples:
+    languages:
+      - lang: curl
+      - lang: JavaScript
+      - lang: Node.js
