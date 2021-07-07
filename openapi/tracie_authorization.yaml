@@ -1,0 +1,447 @@
+openapi: 3.0.1
+info:
+  title: Ratepay Payment API
+  description: This is the documentation for the Ratepay payment API v2. The API is
+    still in development and subject to change. The documentation will evolve as the
+    development of the API progresses.
+  contact:
+    name: Ratepay
+    url: https://www.ratepay.com/
+    email: info@ratepay.com
+  version: v2
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+paths:
+  /v2/orders:
+    post:
+      tags:
+      - Payment API
+      summary: Authorization request
+      description: Perform an authorization request for a transaction.
+      operationId: createOrder
+      parameters:
+      - name: Prefer
+        in: header
+        description: "According to RFC 7240: Provide return=representation if you\
+          \ prefer that the response to a request includes the current state of the\
+          \ resource."
+        required: false
+        schema:
+          type: string
+          enum:
+          - return=representation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderDto'
+        required: true
+      responses:
+        "406":
+          description: Not acceptable
+        "400":
+          description: Bad request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        "500":
+          description: Technical problem
+        "201":
+          description: Transaction authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MinimalOrderResponseDto'
+        "422":
+          description: Transaction rejected
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+components:
+  schemas:
+    AddressDto:
+      required:
+      - city
+      - country_code
+      - street
+      - zip_code
+      type: object
+      properties:
+        street:
+          maxLength: 100
+          minLength: 0
+          pattern: "[<>A-Za-z0-9äöüßÄÖÜ&.:;',+/=?^_\\-`\\[\\]{|}()ÀÁÂÃÅÆÇÈÉÊÌÍÎÐÑÒ\
+            ÓÔÕØŒÙÚÛÝÞŠËÏŸàáâãåæçèéêìíîðñòóôõøœùúûýþšëïÿ\\s]*"
+          type: string
+          example: Schönhauser Allee
+        street_number:
+          maxLength: 30
+          minLength: 0
+          pattern: "[<>A-Za-z0-9äöüßÄÖÜ&.:;',+/=?^_\\-`\\[\\]{|}()ÀÁÂÃÅÆÇÈÉÊÌÍÎÐÑÒ\
+            ÓÔÕØŒÙÚÛÝÞŠËÏŸàáâãåæçèéêìíîðñòóôõøœùúûýþšëïÿ\\s]*"
+          type: string
+          example: "84"
+        street_addition:
+          maxLength: 50
+          minLength: 0
+          pattern: "[<>A-Za-z0-9äöüßÄÖÜ&.:;',+/=?^_\\-`\\[\\]{|}()ÀÁÂÃÅÆÇÈÉÊÌÍÎÐÑÒ\
+            ÓÔÕØŒÙÚÛÝÞŠËÏŸàáâãåæçèéêìíîðñòóôõøœùúûýþšëïÿ\\s]*"
+          type: string
+          example: "Seitenflügel, 2. HH"
+        zip_code:
+          maxLength: 10
+          minLength: 0
+          type: string
+          example: "10439"
+        city:
+          maxLength: 100
+          minLength: 0
+          pattern: "[<>A-Za-z0-9äöüßÄÖÜ&.:;',+/=?^_\\-`\\[\\]{|}()ÀÁÂÃÅÆÇÈÉÊÌÍÎÐÑÒ\
+            ÓÔÕØŒÙÚÛÝÞŠËÏŸàáâãåæçèéêìíîðñòóôõøœùúûýþšëïÿ\\s]*"
+          type: string
+          example: Berlin
+        country_code:
+          pattern: "[A-Z]{2}"
+          type: string
+          example: DE
+    BrandingSettingsDto:
+      type: object
+      properties:
+        logo_url:
+          maxLength: 2147483647
+          minLength: 4
+          type: string
+          description: Publicly accessible shop logo to include in buyer correspondences.
+          example: http://cdn.example.com/a/b/c/logo-fruits-and-more_400x65.png
+        logo_position:
+          pattern: LEFT|RIGHT|CENTER
+          type: string
+          description: "Shop logo position in buyer correspondences. Allowed values:\
+            \ LEFT, RIGHT or CENTER."
+          example: RIGHT
+          enum:
+          - LEFT
+          - RIGHT
+          - CENTER
+        highlight_color:
+          pattern: "#[a-zA-Z0-9]{6}"
+          type: string
+          description: "The color for the highlighted elements in buyer correspondences\
+            \ as HTML HEX color code, e.g. #BADB11."
+          example: '#badb11'
+      description: Shop branding settings for buyer correspondences.
+    BuyerDto:
+      required:
+      - billing_address
+      - person
+      type: object
+      properties:
+        person:
+          $ref: '#/components/schemas/PersonDto'
+        billing_address:
+          $ref: '#/components/schemas/AddressDto'
+        language:
+          type: string
+          example: DE
+    CorrespondenceSettingsDto:
+      required:
+      - slangs
+      type: object
+      properties:
+        branding_settings:
+          $ref: '#/components/schemas/BrandingSettingsDto'
+        slangs:
+          $ref: '#/components/schemas/SlangsDto'
+      description: Settings for buyer correspondences.
+    DeliveryDto:
+      type: object
+      properties:
+        first_name:
+          maxLength: 100
+          minLength: 1
+          type: string
+          example: Heinz
+        last_name:
+          maxLength: 100
+          minLength: 1
+          type: string
+          example: Steeger
+        company:
+          maxLength: 100
+          minLength: 1
+          type: string
+          example: Berlin Advertising Agency
+        delivery_address:
+          $ref: '#/components/schemas/AddressDto'
+    Link:
+      type: object
+      properties:
+        href:
+          type: string
+        hreflang:
+          type: string
+        title:
+          type: string
+        type:
+          type: string
+        deprecation:
+          type: string
+        profile:
+          type: string
+        name:
+          type: string
+        templated:
+          type: boolean
+    OrderDto:
+      required:
+      - buyer
+      - currency
+      - payment_method
+      - shops
+      type: object
+      properties:
+        external_order_id:
+          type: string
+          example: order-id-1234
+        payment_method:
+          $ref: '#/components/schemas/PaymentMethodDto'
+        currency:
+          pattern: "[A-Z]{3}"
+          type: string
+          example: EUR
+        buyer:
+          $ref: '#/components/schemas/BuyerDto'
+        delivery:
+          $ref: '#/components/schemas/DeliveryDto'
+        shops:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShopDto'
+        _links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+    PaymentMethodDto:
+      required:
+      - payment_option
+      - transfer_type
+      type: object
+      properties:
+        payment_option:
+          pattern: OPEN_INVOICE
+          type: string
+          example: OPEN_INVOICE
+          enum:
+          - OPEN_INVOICE
+        transfer_type:
+          pattern: BANK_TRANSFER
+          type: string
+          example: BANK_TRANSFER
+          enum:
+          - BANK_TRANSFER
+    PersonDto:
+      required:
+      - date_of_birth
+      - first_name
+      - last_name
+      type: object
+      properties:
+        first_name:
+          maxLength: 100
+          minLength: 0
+          type: string
+          example: Heinz
+        last_name:
+          maxLength: 100
+          minLength: 0
+          type: string
+          example: Steeger
+        title:
+          maxLength: 45
+          minLength: 0
+          type: string
+          example: Dr.
+        date_of_birth:
+          type: string
+          format: date
+          example: 1971-05-19
+    ShopDto:
+      required:
+      - correspondence_settings
+      - legal
+      - merchant_category_code
+      - name
+      - shop_id
+      type: object
+      properties:
+        shop_id:
+          maxLength: 255
+          minLength: 2
+          type: string
+          example: shop-id-1
+        name:
+          maxLength: 255
+          minLength: 2
+          type: string
+          example: fruits and more
+        merchant_category_code:
+          pattern: "[0-9]{4}"
+          type: string
+          example: "5499"
+        legal:
+          $ref: '#/components/schemas/ShopLegalDto'
+        correspondence_settings:
+          $ref: '#/components/schemas/CorrespondenceSettingsDto'
+    ShopLegalDto:
+      required:
+      - commercial_register_number
+      - legal_form
+      - name
+      type: object
+      properties:
+        commercial_register_number:
+          maxLength: 255
+          minLength: 2
+          type: string
+          example: HRB 12345 (FF)
+        legal_form:
+          maxLength: 255
+          minLength: 2
+          type: string
+          example: GmbH
+        name:
+          maxLength: 255
+          minLength: 2
+          type: string
+          example: Fruits and more GmbH
+    SlangDto:
+      required:
+      - customer_contact_service
+      type: object
+      properties:
+        salutation:
+          maxLength: 2147483647
+          minLength: 1
+          type: string
+          description: "Word for salutation in the buyer correspondences in this language,\
+            \ e.g. Hi, Hello, Hallo, Guten Tag, etc."
+          example: Hello
+        name_format:
+          pattern: FIRST_NAME|LAST_NAME|FIRST_LAST_NAME
+          type: string
+          description: "Specifies how to visualize the buyer's name after the salutation\
+            \ in the buyer correspondences. Allowed values: FIRST_NAME, LAST_NAME\
+            \ or FIRST_LAST_NAME"
+          example: FIRST_LAST_NAME
+          enum:
+          - FIRST_NAME
+          - LAST_NAME
+          - FIRST_LAST_NAME
+        transaction_type:
+          pattern: ORDER|BOOKING
+          type: string
+          description: "Specifies how to call the transaction in buyer correspondences.\
+            \ Allowed values: ORDER or BOOKING"
+          example: ORDER
+          enum:
+          - ORDER
+          - BOOKING
+        formal_tone:
+          pattern: FORMAL|INFORMAL
+          type: string
+          description: "Formality level for the buyer correspondences. Allowed values:\
+            \ FORMAL or INFORMAL"
+          example: INFORMAL
+          enum:
+          - FORMAL
+          - INFORMAL
+        customer_contact_service:
+          maxItems: 5
+          minItems: 1
+          type: array
+          description: List of 1 to 5 lines with correspondence information. Include
+            how to reach customer support.
+          example:
+          - You can reach our customer service Mon - Sun 7 am to 8 pm
+          - "by mail: customer-service@example.com"
+          - "by phone: 030 / 123 456 789"
+          - "contact form: example.com/contact"
+          items:
+            type: string
+            description: List of 1 to 5 lines with correspondence information. Include
+              how to reach customer support.
+            example: "[\"You can reach our customer service Mon - Sun 7 am to 8 pm\"\
+              ,\"by mail: customer-service@example.com\",\"by phone: 030 / 123 456\
+              \ 789\",\"contact form: example.com/contact\"]"
+    SlangsDto:
+      required:
+      - de
+      type: object
+      properties:
+        de:
+          $ref: '#/components/schemas/SlangDto'
+        en:
+          $ref: '#/components/schemas/SlangDto'
+      description: Language settings for buyer correspondences.
+    MinimalOrderResponseDto:
+      required:
+      - created
+      - order_id
+      - reference
+      type: object
+      properties:
+        order_id:
+          type: string
+          description: Ratepay transaction ID
+        created:
+          type: string
+          description: timestamp with offset according to ISO-8601
+          format: date-time
+        reference:
+          type: string
+          description: reference to supply with payment
+        _links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+    DeclineDto:
+      required:
+      - category
+      - reasons
+      type: object
+      properties:
+        category:
+          type: string
+          enum:
+          - BUYER_IDENTITY
+          - SYNTAX
+          - CONTRACT
+        reasons:
+          type: array
+          items:
+            type: string
+            enum:
+            - INVALID_BILLING_ADDRESS
+            - INVALID_DELIVERY_ADDRESS
+            - CURRENCY_NOT_ALLOWED
+    ErrorDto:
+      required:
+      - created
+      - decline
+      - order_id
+      type: object
+      properties:
+        decline:
+          $ref: '#/components/schemas/DeclineDto'
+        order_id:
+          type: string
+        created:
+          type: string
+          format: date-time
+        _links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
