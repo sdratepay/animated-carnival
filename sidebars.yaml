@@ -3,4 +3,4 @@ training:
   - group: Transaction API
     expanded: false
     pages:
-      - page: openapi/reference.page.yaml/*
+      - page: openapi/tracie_authorization.page.yaml/*
