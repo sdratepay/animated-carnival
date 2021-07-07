@@ -1,7 +1,7 @@
 type: reference-docs
-definitionId: tracie_authorization
+definitionId: transaction_api
 settings:
-  label: Transaction Authorization
+  label: Transaction API
   generateCodeSamples:
     languages:
       - lang: curl
