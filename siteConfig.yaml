@@ -6,7 +6,7 @@ meta:
 logo: ./images/ratepay_logo_white.png
 enableToc: false
 oasDefinitions:
-  transaction_api: https://orange-squid-19.redoc.ly
+  transaction_api: ./openapi/transaction_api.yaml
   # add links to definitions in our API registry by using a fully qualified URL.
 stylesheets:
   - https://fonts.googleapis.com/css?family=Roboto:300,400,600,700
