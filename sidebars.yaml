@@ -1,6 +1,6 @@
 ratepay:
-  - page: developer-portal/index.md
-  - group: Transaction API
+  - page: ./developer-portal/index.md
+  - group: Payment API
     expanded: true
     pages:
-      - page: openapi/transaction_api.page.yaml/*
+      - page: ./payment/openapi/payment_api.page.yaml/*
